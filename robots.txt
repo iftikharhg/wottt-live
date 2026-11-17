@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://wottt.com.pk/sitemap.xml

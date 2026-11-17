@@ -1,0 +1,61 @@
+# WOTTT Travel & Tours — settings for Apache / LiteSpeed hosting (cPanel and similar).
+# Netlify ignores this file and reads netlify.toml instead. Both carry the same redirects.
+
+Options -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+AddDefaultCharset UTF-8
+
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+  AddType font/woff2 .woff2
+  AddType video/mp4 .mp4
+  AddType application/manifest+json .webmanifest
+  AddType image/svg+xml .svg
+</IfModule>
+
+# ── Addresses from the previous website → their new pages (permanent) ──
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^reviews/?$ /stories/ [R=301,L]
+  RewriteRule ^branches/?$ /contact/#branches [R=301,L,NE]
+  RewriteRule ^ticketing/?$ /flights-holidays/#flights [R=301,L,NE]
+  RewriteRule ^tourism/?$ /flights-holidays/#holidays [R=301,L,NE]
+  RewriteRule ^travel-insurance/?$ /flights-holidays/#insurance [R=301,L,NE]
+  RewriteRule ^visa-documentation/?$ /flights-holidays/#visas [R=301,L,NE]
+  RewriteRule ^privacy-policy/?$ /privacy/ [R=301,L]
+  RewriteRule ^terms-and-conditions/?$ /terms/ [R=301,L]
+  RewriteRule ^blog/study-abroad-from-pakistan-how-to-start-planning/?$ /study-abroad/how-it-works/ [R=301,L]
+  RewriteRule ^blog/generic-study-visa-documents-pakistani-students-should-prepare/?$ /updates/hec-ibcc-mofa-attestation-explained/ [R=301,L]
+  RewriteRule ^blog/umrah-planning-checklist-for-families/?$ /updates/umrah-with-family-packing-and-planning-checklist/ [R=301,L]
+  RewriteRule ^blog/what-to-know-before-booking-international-tickets/?$ /flights-holidays/#flights [R=301,L,NE]
+  RewriteRule ^blog/why-travel-insurance-matters-for-international-travel/?$ /flights-holidays/#insurance [R=301,L,NE]
+  RewriteRule ^blog(/.*)?$ /updates/ [R=301,L]
+</IfModule>
+
+# ── Compression ──
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript application/json application/xml image/svg+xml application/manifest+json
+</IfModule>
+
+# ── Caching: pages always fresh; styles and scripts one hour; images, fonts and videos one week or more ──
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 hour"
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 hour"
+  ExpiresByType application/javascript "access plus 1 hour"
+  ExpiresByType image/webp "access plus 7 days"
+  ExpiresByType image/jpeg "access plus 7 days"
+  ExpiresByType image/png "access plus 7 days"
+  ExpiresByType image/svg+xml "access plus 7 days"
+  ExpiresByType image/x-icon "access plus 7 days"
+  ExpiresByType video/mp4 "access plus 7 days"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/kntmexmo/public_html/
+    - /bin/cp -R about academy assets contact flights-holidays privacy stories study-abroad terms umrah updates $DEPLOYPATH
+    - /bin/cp .htaccess 404.html index.html robots.txt sitemap.xml $DEPLOYPATH
